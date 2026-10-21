@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brief de Proyecto Digital Educativo</title>
+<style>
+:root{--navy:#06036E;--cyan:#00BDFF;--gray:#6D6E71;--ink:#25253b;--line:#d9deea;--pale:#f3f7fc;--white:#fff;--green:#18794e}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6fb;color:var(--ink);font:16px/1.55 "Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(125deg,var(--navy),#17148f 70%,#087eb6);color:#fff;padding:34px 20px}
+.wrap{max-width:1050px;margin:auto}
+.eyebrow{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:#b9efff}
+h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.15;margin:.4rem 0}
+header p{max-width:760px;margin:.7rem 0 0;color:#e6f6ff}
+.topbar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px #10104b0b}
+.toolbar{max-width:1050px;margin:auto;padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,.file-label{border:0;border-radius:9px;padding:10px 14px;font:600 .92rem "Segoe UI",Arial;cursor:pointer}
+.primary{background:var(--navy);color:#fff}.secondary{background:#eaf8ff;color:var(--navy);border:1px solid #bcecff}.plain{background:#f1f2f7;color:#333}
+.status{margin-left:auto;color:var(--gray);font-size:.85rem}
+main{max-width:1050px;margin:24px auto;padding:0 16px 50px}
+.intro{background:#fff;border:1px solid var(--line);border-left:5px solid var(--cyan);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+.progress-wrap{height:7px;background:#e2e6f0;border-radius:9px;overflow:hidden;margin-top:12px}
+#progress{height:100%;width:0;background:var(--cyan);transition:width .2s}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden;box-shadow:0 3px 12px #18215a08}
+.section-head{display:flex;gap:12px;align-items:center;padding:17px 20px;background:#fbfcff;border-bottom:1px solid var(--line)}
+.num{width:34px;height:34px;flex:0 0 34px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}
+h2{font-size:1.12rem;margin:0;color:var(--navy)}
+.hint{font-size:.88rem;color:var(--gray);margin:3px 0 0}
+.section-body{padding:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.field{min-width:0}.full{grid-column:1/-1}
+label{display:block;font-weight:650;font-size:.92rem;margin-bottom:6px}
+.optional{font-weight:400;color:var(--gray);font-size:.8rem}
+input,textarea,select{width:100%;padding:11px 12px;border:1px solid #cbd2e2;border-radius:8px;background:#fff;color:var(--ink);font:inherit}
+textarea{min-height:95px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:3px solid #00bdff30;border-color:var(--cyan)}
+::placeholder{color:#9399a9}
+.checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.check{display:flex;gap:9px;align-items:flex-start;background:var(--pale);border:1px solid #e0e6f1;padding:10px;border-radius:8px;font-weight:400;margin:0}
+.check input{width:auto;margin-top:5px;accent-color:var(--navy)}
+.check span{font-size:.92rem}
+.note{font-size:.86rem;color:var(--gray);background:#f8f9fc;padding:12px;border-radius:8px}
+footer{max-width:1050px;margin:0 auto;padding:0 16px 35px;color:var(--gray);font-size:.85rem}
+@media(max-width:650px){.section-body{grid-template-columns:1fr;padding:15px}.full{grid-column:auto}.checklist{grid-template-columns:1fr}.status{width:100%;margin-left:0}.section-head{padding:14px}.toolbar{gap:6px}button,.file-label{padding:9px 11px}}
+@media print{body{background:#fff;font-size:11pt}.topbar{display:none}header{padding:20px;background:var(--navy)!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}main{margin:10px auto;padding:0}section{break-inside:avoid;box-shadow:none}.section-head{print-color-adjust:exact;-webkit-print-color-adjust:exact}.section-body{padding:12px;gap:10px}textarea,input,select{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:5px 0;min-height:30px}textarea{min-height:48px}.intro{break-inside:avoid}footer{padding-bottom:0}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="eyebrow">Diseño instruccional · Proyecto digital</div>
+  <h1>Brief de Proyecto Digital Educativo</h1>
+  <p>Instrumento de trabajo para definir una plataforma abierta de recursos educativos orientada al aprendizaje autónomo y asincrónico. Complete los campos, guarde su avance o exporte el brief.</p>
+ </div>
+</header>
+<div class="topbar">
+ <div class="toolbar">
+  <button class="primary" type="button" id="saveBtn">Guardar avance</button>
+  <button class="secondary" type="button" id="exportBtn">Exportar respuestas (.json)</button>
+  <label class="file-label secondary" for="importFile">Importar respuestas</label>
+  <input id="importFile" type="file" accept=".json,application/json" hidden>
+  <button class="secondary" type="button" id="printBtn">Imprimir / Guardar PDF</button>
+  <button class="plain" type="button" id="clearBtn">Limpiar formulario</button>
+  <span class="status" id="status" role="status">Los cambios no se guardan automáticamente.</span>
+ </div>
+</div>
+<main>
+ <div class="intro">
+  <strong>Cómo utilizar este brief</strong>
+  <p>Complete primero la identificación, la necesidad educativa y el público objetivo. Si una decisión todavía no está validada, indíquelo como pendiente en lugar de asumirla. Los campos se pueden editar y el progreso se calcula según las respuestas ingresadas.</p>
+  <div class="progress-wrap" aria-label="Progreso de llenado"><div id="progress"></div></div>
+  <small id="progressText">0 % completado</small>
+ </div>
+ <form id="briefForm">
+  <section>
+   <div class="section-head"><div class="num">1</div><div><h2>Identificación del proyecto</h2><p class="hint">Datos básicos y responsables.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="projectName">Nombre provisional</label><input id="projectName" name="projectName" placeholder="Nombre de la plataforma o iniciativa"></div>
+    <div class="field"><label for="institution">Institución o responsable</label><input id="institution" name="institution" placeholder="Institución, equipo o persona responsable"></div>
+    <div class="field"><label for="team">Equipo de trabajo <span class="optional">(opcional)</span></label><input id="team" name="team" placeholder="Roles o integrantes"></div>
+    <div class="field"><label for="date">Fecha de elaboración</label><input id="date" name="date" type="date"></div>
+    <div class="field full"><label for="area">Área(s) de conocimiento</label><input id="area" name="area" placeholder="Ej. educación, teología, ciencias, formación profesional"></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">2</div><div><h2>Contexto y necesidad educativa</h2><p class="hint">Defina el problema antes de elegir la solución tecnológica.</p></div></div>
+   <div class="section-body">
+    <div class="field full"><label for="need">Necesidad o problema educativo</label><textarea id="need" name="need" placeholder="¿Qué necesidad de aprendizaje, problema o brecha de acceso se desea atender?"></textarea></div>
+    <div class="field"><label for="evidence">Evidencias disponibles</label><textarea id="evidence" name="evidence" placeholder="Encuestas, entrevistas, estadísticas, diagnósticos o fuentes."></textarea></div>
+    <div class="field"><label for="problem">Problema principal que se busca resolver</label><textarea id="problem" name="problem" placeholder="Describa el problema de forma concreta."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">3</div><div><h2>Propósito y objetivos</h2><p class="hint">Explicite el cambio que espera lograr.</p></div></div>
+   <div class="section-body">
+    <div class="field full"><label for="purpose">Propósito general</label><textarea id="purpose" name="purpose" placeholder="¿Para qué se desarrollará la plataforma?"></textarea></div>
+    <div class="field"><label for="obj1">Objetivo específico 1</label><textarea id="obj1" name="obj1" placeholder="Resultado esperado"></textarea></div>
+    <div class="field"><label for="obj2">Objetivo específico 2</label><textarea id="obj2" name="obj2" placeholder="Resultado esperado"></textarea></div>
+    <div class="field full"><label for="obj3">Objetivo específico 3 <span class="optional">(opcional)</span></label><textarea id="obj3" name="obj3" placeholder="Resultado esperado"></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">4</div><div><h2>Público objetivo</h2><p class="hint">Identifique a quiénes servirá la plataforma y sus condiciones de acceso.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="users">Usuarios principales</label><textarea id="users" name="users" placeholder="¿Quiénes utilizarán los recursos?"></textarea></div>
+    <div class="field"><label for="profile">Edad, perfil académico y conocimientos previos</label><textarea id="profile" name="profile" placeholder="Características relevantes de los usuarios."></textarea></div>
+    <div class="field"><label for="learningNeeds">Necesidades de aprendizaje</label><textarea id="learningNeeds" name="learningNeeds" placeholder="Metas, dificultades o preferencias identificadas."></textarea></div>
+    <div class="field"><label for="access">Acceso a internet, dispositivos y barreras</label><textarea id="access" name="access" placeholder="Conectividad, disponibilidad, accesibilidad, idioma, etc."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">5</div><div><h2>Propuesta de valor</h2><p class="hint">Explique por qué la plataforma será útil y pertinente.</p></div></div>
+   <div class="section-body">
+    <div class="field full"><label for="value">Propuesta de valor</label><textarea id="value" name="value" placeholder="¿Qué ofrecerá la plataforma y qué necesidad resolverá?"></textarea></div>
+    <div class="field"><label for="benefit">Beneficio principal para el usuario</label><textarea id="benefit" name="benefit" placeholder="¿Qué podrá hacer o aprender mejor?"></textarea></div>
+    <div class="field"><label for="difference">Diferenciación respecto de otras opciones</label><textarea id="difference" name="difference" placeholder="¿Qué la hará distinta o especialmente pertinente?"></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">6</div><div><h2>Modelo de aprendizaje asincrónico</h2><p class="hint">Diseñe la experiencia pedagógica, no solo la publicación de contenidos.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="approach">Enfoque pedagógico</label><textarea id="approach" name="approach" placeholder="Ej. aprendizaje autónomo, basado en problemas, competencias."></textarea></div>
+    <div class="field"><label for="strategies">Estrategias didácticas</label><textarea id="strategies" name="strategies" placeholder="Casos, práctica, reflexión, proyectos, ejercicios."></textarea></div>
+    <div class="field"><label for="organization">Organización de contenidos</label><textarea id="organization" name="organization" placeholder="Por temas, competencias, rutas, niveles o cursos."></textarea></div>
+    <div class="field"><label for="support">Acompañamiento</label><textarea id="support" name="support" placeholder="Autónomo, tutoría opcional, comunidad u otros."></textarea></div>
+    <div class="field full"><label for="assessment">Evaluación y retroalimentación</label><textarea id="assessment" name="assessment" placeholder="Autoevaluaciones, ejercicios prácticos, proyectos, insignias u otras opciones."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">7</div><div><h2>Tipos de recursos digitales</h2><p class="hint">Seleccione los recursos previstos y priorice los de la primera versión.</p></div></div>
+   <div class="section-body">
+    <div class="field full"><label>Recursos previstos</label>
+     <div class="checklist">
+      <label class="check"><input type="checkbox" name="resources" value="Videos educativos y microclases"><span>Videos educativos y microclases</span></label>
+      <label class="check"><input type="checkbox" name="resources" value="Guías y documentos descargables"><span>Guías y documentos descargables</span></label>
+      <label class="check"><input type="checkbox" name="resources" value="Infografías y mapas conceptuales"><span>Infografías y mapas conceptuales</span></label>
+      <label class="check"><input type="checkbox" name="resources" value="Audios y pódcast"><span>Audios y pódcast</span></label>
+      <label class="check"><input type="checkbox" name="resources" value="Actividades interactivas y simulaciones"><span>Actividades interactivas y simulaciones</span></label>
+      <label class="check"><input type="checkbox" name="resources" value="Cuestionarios y autoevaluaciones"><span>Cuestionarios y autoevaluaciones</span></label>
+      <label class="check"><input type="checkbox" name="resources" value="Casos prácticos y proyectos"><span>Casos prácticos y proyectos</span></label>
+      <label class="check"><input type="checkbox" name="resources" value="Lecturas y recursos complementarios"><span>Lecturas y recursos complementarios</span></label>
+     </div>
+    </div>
+    <div class="field full"><label for="resourcePriority">Recursos prioritarios para la primera versión</label><textarea id="resourcePriority" name="resourcePriority" placeholder="Indique cuáles se producirán primero y por qué."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">8</div><div><h2>Funcionalidades y acceso</h2><p class="hint">Defina lo indispensable y deje otras funciones para fases posteriores.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="accessModel">Modelo de acceso</label><select id="accessModel" name="accessModel"><option value="">Seleccione una opción</option><option>Abierto sin registro</option><option>Abierto con registro opcional</option><option>Mixto: recursos abiertos y funciones registradas</option><option>Pendiente de definir</option></select></div>
+    <div class="field"><label for="technology">Tecnología o plataforma por evaluar</label><input id="technology" name="technology" placeholder="Ej. sitio web, LMS, repositorio"></div>
+    <div class="field full"><label>Funcionalidades necesarias</label>
+     <div class="checklist">
+      <label class="check"><input type="checkbox" name="features" value="Buscador, categorías y filtros"><span>Buscador, categorías y filtros</span></label>
+      <label class="check"><input type="checkbox" name="features" value="Diseño adaptable a móviles"><span>Diseño adaptable a móviles</span></label>
+      <label class="check"><input type="checkbox" name="features" value="Descarga de materiales autorizados"><span>Descarga de materiales autorizados</span></label>
+      <label class="check"><input type="checkbox" name="features" value="Accesibilidad digital"><span>Accesibilidad digital</span></label>
+      <label class="check"><input type="checkbox" name="features" value="Seguimiento de progreso"><span>Seguimiento de progreso</span></label>
+      <label class="check"><input type="checkbox" name="features" value="Interactividad y analítica educativa"><span>Interactividad y analítica educativa</span></label>
+     </div>
+    </div>
+    <div class="field full"><label for="otherFeatures">Otras funciones o requisitos</label><textarea id="otherFeatures" name="otherFeatures" placeholder="Incluya requisitos técnicos, de seguridad o integración."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">9</div><div><h2>Uso de inteligencia artificial</h2><p class="hint">Identifique usos concretos y controles de calidad.</p></div></div>
+   <div class="section-body">
+    <div class="field full"><label>Aplicaciones potenciales de IA</label>
+     <div class="checklist">
+      <label class="check"><input type="checkbox" name="aiUses" value="Apoyo en producción y adaptación de recursos"><span>Producción y adaptación de recursos</span></label>
+      <label class="check"><input type="checkbox" name="aiUses" value="Generación de preguntas y actividades"><span>Preguntas y actividades</span></label>
+      <label class="check"><input type="checkbox" name="aiUses" value="Asistencia para búsqueda y orientación"><span>Búsqueda y orientación al usuario</span></label>
+      <label class="check"><input type="checkbox" name="aiUses" value="Adaptación a distintos niveles"><span>Adaptación a distintos niveles</span></label>
+      <label class="check"><input type="checkbox" name="aiUses" value="Revisión de calidad y accesibilidad"><span>Revisión de calidad y accesibilidad</span></label>
+     </div>
+    </div>
+    <div class="field"><label for="aiControls">Controles y uso responsable</label><textarea id="aiControls" name="aiControls" placeholder="Verificación humana, transparencia, privacidad, sesgos y derechos de autor."></textarea></div>
+    <div class="field"><label for="aiPending">Usos de IA por validar</label><textarea id="aiPending" name="aiPending" placeholder="Riesgos, límites y decisiones pendientes."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">10</div><div><h2>Alcance y entregables</h2><p class="hint">Delimite una primera versión viable (MVP).</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="resourceCount">Cantidad y tipo de recursos iniciales</label><textarea id="resourceCount" name="resourceCount" placeholder="Estimación inicial, sujeta a validación."></textarea></div>
+    <div class="field"><label for="topics">Áreas temáticas incluidas</label><textarea id="topics" name="topics" placeholder="Temas o disciplinas de la primera fase."></textarea></div>
+    <div class="field"><label for="mustHave">Funcionalidades indispensables</label><textarea id="mustHave" name="mustHave" placeholder="Qué debe estar listo para lanzar el piloto."></textarea></div>
+    <div class="field"><label for="outScope">Fuera del alcance inicial</label><textarea id="outScope" name="outScope" placeholder="Qué se pospone o no se desarrollará en esta fase."></textarea></div>
+    <div class="field full"><label for="deliverables">Entregables previstos</label><textarea id="deliverables" name="deliverables" placeholder="Ej. arquitectura de contenidos, prototipo, recursos piloto, plataforma y evaluación."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">11</div><div><h2>Recursos y sostenibilidad</h2><p class="hint">Considere quién mantendrá el proyecto en funcionamiento.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="people">Equipo humano necesario</label><textarea id="people" name="people" placeholder="Diseño instruccional, especialistas, producción, tecnología, etc."></textarea></div>
+    <div class="field"><label for="budget">Presupuesto estimado</label><textarea id="budget" name="budget" placeholder="Monto, moneda o pendiente de cotización."></textarea></div>
+    <div class="field"><label for="infrastructure">Infraestructura y herramientas</label><textarea id="infrastructure" name="infrastructure" placeholder="Hosting, software, equipos y servicios."></textarea></div>
+    <div class="field"><label for="maintenance">Responsables de actualización</label><textarea id="maintenance" name="maintenance" placeholder="Roles y frecuencia de revisión."></textarea></div>
+    <div class="field"><label for="sustainability">Modelo de sostenibilidad</label><textarea id="sustainability" name="sustainability" placeholder="Institucional, alianzas, donaciones, financiación u otro."></textarea></div>
+    <div class="field"><label for="rights">Licencias y derechos de uso</label><textarea id="rights" name="rights" placeholder="Autoría, permisos, licencias abiertas y atribución."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">12</div><div><h2>Indicadores de éxito</h2><p class="hint">Defina cómo se evaluarán alcance, uso y resultados de aprendizaje.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="indicators">Indicadores seleccionados</label><textarea id="indicators" name="indicators" placeholder="Ej. recursos publicados, usuarios, finalización, resultados de aprendizaje, satisfacción y accesibilidad."></textarea></div>
+    <div class="field"><label for="baseline">Línea base, metas y periodo de medición</label><textarea id="baseline" name="baseline" placeholder="Valor inicial, meta esperada, fuente de datos y fecha de revisión."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">13</div><div><h2>Plan inicial de trabajo</h2><p class="hint">Organice el desarrollo en fases y establezca hitos.</p></div></div>
+   <div class="section-body">
+    <div class="field full"><label>Fases sugeridas</label>
+     <div class="checklist">
+      <label class="check"><input type="checkbox" name="phases" value="Diagnóstico de necesidades y usuarios"><span>Fase 1. Diagnóstico</span></label>
+      <label class="check"><input type="checkbox" name="phases" value="Diseño pedagógico y arquitectura"><span>Fase 2. Diseño</span></label>
+      <label class="check"><input type="checkbox" name="phases" value="Prototipo y prueba con usuarios"><span>Fase 3. Prototipado</span></label>
+      <label class="check"><input type="checkbox" name="phases" value="Implementación de primera versión"><span>Fase 4. Implementación</span></label>
+      <label class="check"><input type="checkbox" name="phases" value="Evaluación y mejora"><span>Fase 5. Evaluación y mejora</span></label>
+     </div>
+    </div>
+    <div class="field"><label for="startDate">Fecha estimada de inicio</label><input type="date" id="startDate" name="startDate"></div>
+    <div class="field"><label for="milestones">Hitos, responsables y fechas</label><textarea id="milestones" name="milestones" placeholder="Indique los principales hitos y responsables."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">14</div><div><h2>Riesgos y decisiones pendientes</h2><p class="hint">Registre supuestos que deben verificarse antes de comprometer recursos.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="risks">Riesgos principales</label><textarea id="risks" name="risks" placeholder="Pedagógicos, tecnológicos, financieros, legales o de adopción."></textarea></div>
+    <div class="field"><label for="assumptions">Supuestos por validar</label><textarea id="assumptions" name="assumptions" placeholder="Hipótesis que necesitan evidencia."></textarea></div>
+    <div class="field"><label for="pending">Decisiones pendientes</label><textarea id="pending" name="pending" placeholder="Decisiones todavía no aprobadas."></textarea></div>
+    <div class="field"><label for="launchCriteria">Criterios para autorizar el lanzamiento</label><textarea id="launchCriteria" name="launchCriteria" placeholder="Condiciones mínimas de calidad, funcionamiento y contenido."></textarea></div>
+   </div>
+  </section>
+  <section>
+   <div class="section-head"><div class="num">15</div><div><h2>Validación del brief</h2><p class="hint">Registre la revisión y el estado del proyecto.</p></div></div>
+   <div class="section-body">
+    <div class="field"><label for="owner">Responsable del proyecto</label><input id="owner" name="owner" placeholder="Nombre o rol"></div>
+    <div class="field"><label for="reviewers">Personas que validan la propuesta</label><input id="reviewers" name="reviewers" placeholder="Nombres o roles"></div>
+    <div class="field"><label for="approvalDate">Fecha de validación</label><input type="date" id="approvalDate" name="approvalDate"></div>
+    <div class="field"><label for="state">Estado del brief</label><select id="state" name="state"><option value="">Seleccione el estado</option><option>Pendiente de validación</option><option>Aprobado para diseño</option><option>Requiere ajustes</option></select></div>
+    <div class="field full"><label for="comments">Observaciones finales</label><textarea id="comments" name="comments" placeholder="Acuerdos, condiciones o próximos pasos."></textarea></div>
+   </div>
+  </section>
+  <div class="intro"><strong>Recordatorio metodológico</strong><p>El brief orienta las decisiones; no las sustituye. Valide las necesidades con usuarios reales y pruebe un conjunto pequeño de recursos antes de escalar la plataforma.</p></div>
+ </form>
+</main>
+<footer>Modelo de trabajo editable · Las respuestas se procesan en este navegador. Use “Guardar avance” para descargar una copia JSON; este archivo HTML no transmite información a un servidor.</footer>
+<script>
+(function(){
+ const form=document.getElementById('briefForm');
+ const status=document.getElementById('status');
+ const progress=document.getElementById('progress');
+ const progressText=document.getElementById('progressText');
+ const storageKey='briefProyectoDigitalEducativo_v1';
+ function collect(){
+  const data={};
+  const elements=[...form.elements];
+  for(const el of elements){
+   if(!el.name) continue;
+   if(el.type==='checkbox'){
+    if(!data[el.name]) data[el.name]=[];
+    if(el.checked) data[el.name].push(el.value);
+   }else if(el.type!=='file') data[el.name]=el.value;
+  }
+  return {schema:'brief-proyecto-digital-educativo-v1',savedAt:new Date().toISOString(),data};
+ }
+ function apply(payload){
+  const data=payload.data||payload;
+  for(const el of [...form.elements]){
+   if(!el.name || !(el.name in data)) continue;
+   if(el.type==='checkbox') el.checked=Array.isArray(data[el.name])&&data[el.name].includes(el.value);
+   else if(el.type!=='file') el.value=data[el.name]??'';
+  }
+  updateProgress();
+ }
+ function updateProgress(){
+  const fields=[...form.querySelectorAll('input:not([type=checkbox]):not([type=file]), textarea, select')];
+  const completed=fields.filter(el=>el.value.trim()!=='').length;
+  const total=fields.length||1;
+  const pct=Math.round(completed/total*100);
+  progress.style.width=pct+'%'; progressText.textContent=pct+' % de campos de texto completados';
+ }
+ function download(filename,content,type){
+  const blob=new Blob([content],{type});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+ }
+ form.addEventListener('input',updateProgress);
+ form.addEventListener('change',updateProgress);
+ document.getElementById('saveBtn').addEventListener('click',()=>{
+  const payload=collect();
+  try{localStorage.setItem(storageKey,JSON.stringify(payload));}catch(e){}
+  download('brief_proyecto_digital_respuestas.json',JSON.stringify(payload,null,2),'application/json;charset=utf-8');
+  status.textContent='Copia JSON preparada para guardar.';
+ });
+ document.getElementById('exportBtn').addEventListener('click',()=>{
+  download('brief_proyecto_digital_respuestas.json',JSON.stringify(collect(),null,2),'application/json;charset=utf-8');
+  status.textContent='Respuestas exportadas.';
+ });
+ document.getElementById('importFile').addEventListener('change',async e=>{
+  const file=e.target.files[0];if(!file)return;
+  try{apply(JSON.parse(await file.text()));status.textContent='Respuestas importadas.';}
+  catch(err){status.textContent='No se pudo leer el archivo JSON.';}
+  e.target.value='';
+ });
+ document.getElementById('printBtn').addEventListener('click',()=>window.print());
+ document.getElementById('clearBtn').addEventListener('click',()=>{
+  if(!confirm('¿Desea limpiar todos los campos? Exporte o guarde sus respuestas antes de continuar.'))return;
+  form.reset();try{localStorage.removeItem(storageKey)}catch(e){}
+  updateProgress();status.textContent='Formulario limpio.';
+ });
+ try{
+  const saved=localStorage.getItem(storageKey);
+  if(saved){apply(JSON.parse(saved));status.textContent='Se recuperó un avance guardado en este navegador.';}
+ }catch(e){}
+ updateProgress();
+})();
+</script>
+</body>
+</html>
